@@ -1,0 +1,5 @@
+#avatar_img:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.9;
+}
+

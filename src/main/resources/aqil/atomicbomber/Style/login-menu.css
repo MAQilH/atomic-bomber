@@ -1,0 +1,11 @@
+#login_btn {
+    -fx-background-radius: 5px 5px 0 0;
+}
+
+#guest_btn {
+    -fx-background-radius: 0 0 5px 0;
+}
+
+#signup_btn {
+    -fx-background-radius: 0 0 0 5px;
+}

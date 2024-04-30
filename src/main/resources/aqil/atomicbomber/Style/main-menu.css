@@ -1,0 +1,40 @@
+.username-lbl {
+    -fx-font-size: 20px;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f5f5f5;
+}
+
+#profile_btn {
+    -fx-background-radius: 5px 0 0 0;
+}
+
+#score_board_btn {
+    -fx-background-radius: 0 5px 0 0;
+}
+
+#setting_btn {
+    -fx-background-radius: 0 0 0 5px;
+}
+
+#exit_btn {
+    -fx-background-radius: 0 0 5px 0;
+}
+
+#new_game_lbl, #saved_game_btn {
+    -fx-background-color: transparent;
+}
+
+.start_game_count{
+    -fx-border-color: #676d71;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+}
+
+.start_game_count .label {
+    -fx-font-size: 15px;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f5f5f5;
+}
+

@@ -1,0 +1,17 @@
+
+#select_btn {
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+}
+
+.image-view {
+    -fx-border-color: blue;
+    -fx-border-width: 2px;
+    -fx-opacity: 0.9;
+}
+
+.image-view:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 1;
+}

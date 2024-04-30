@@ -5,4 +5,6 @@ module aqil.atomicbomber {
 
     opens aqil.atomicbomber to javafx.fxml;
     exports aqil.atomicbomber;
+    exports aqil.atomicbomber.view;
+    opens aqil.atomicbomber.view to javafx.fxml;
 }
