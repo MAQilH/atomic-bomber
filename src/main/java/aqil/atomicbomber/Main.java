@@ -1,7 +1,9 @@
 package aqil.atomicbomber;
 
 import aqil.atomicbomber.model.App;
+import aqil.atomicbomber.view.GameLauncher;
 import javafx.application.Application;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -19,21 +21,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
-
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        App.getInstance().setStage(stage);
-
-        URL url = Main.class.getResource("/aqil/atomicbomber/FXML/avatar-menu.fxml");
-
-        assert url != null;
-        Pane pane = FXMLLoader.load(url);
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-
-        stage.setTitle("Atomic Bomber");
-        stage.show();
+        GameLauncher gameLauncher = new GameLauncher();
+        gameLauncher.start(stage);
     }
 
     public static void main(String[] args) {
