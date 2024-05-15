@@ -1,20 +1,26 @@
 package aqil.atomicbomber.model.game.bombs;
 
+import aqil.atomicbomber.model.Sounds;
 import aqil.atomicbomber.model.game.Game;
 import aqil.atomicbomber.model.game.Warplane;
+import aqil.atomicbomber.model.game.obstacles.Obstacle;
 import aqil.atomicbomber.view.animation.BombExplosionAnimation;
 import aqil.atomicbomber.view.animation.BombMoveAnimation;
+import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
-public abstract class Bomb extends Rectangle {
+import java.io.Serializable;
+
+public abstract class Bomb extends Rectangle implements Serializable {
     private final double radius;
     private double speed = 0;
     private double acceleration = 0.2;
     private final Game game;
     private final String bombImageAddress;
     private final int numberOfFrame;
-    Bomb(double HEIGHT, double WIDTH, double radius, Game game, String bombImageAddress, int numberOfFrame){
-        super(HEIGHT, WIDTH);
+    private boolean destroyObstacle = false;
+    Bomb(double WIDTH, double HEIGHT, double radius, Game game, String bombImageAddress, int numberOfFrame){
+        super(WIDTH, HEIGHT);
         this.radius = radius;
         this.game = game;
         this.bombImageAddress = bombImageAddress;
@@ -32,6 +38,7 @@ public abstract class Bomb extends Rectangle {
     }
 
     public void start(){
+        game.setNumberOfPuttedBombs(game.getNumberOfPuttedBombs() + 1);
         initialize(game.getWarplane());
         game.addBomb(this);
         startMove();
@@ -39,15 +46,30 @@ public abstract class Bomb extends Rectangle {
 
     private void startMove(){
         BombMoveAnimation bombMoveAnimation = new BombMoveAnimation(this);
+        game.addAnimation(bombMoveAnimation);
         bombMoveAnimation.play();
+
+        bombMoveAnimation.setOnFinished((event -> {
+            game.removeAnimation(bombMoveAnimation);
+        }));
     }
 
     public void explosion(){
         BombExplosionAnimation bombExplosionAnimation = new BombExplosionAnimation(this, bombImageAddress, numberOfFrame);
+        game.addAnimation(bombExplosionAnimation);
         bombExplosionAnimation.play();
+
+        Sounds.BOMB_EXPLOSION.play();
+
+        bombExplosionAnimation.setOnFinished((event -> {
+            game.removeAnimation(bombExplosionAnimation);
+            remove();
+        }));
     }
 
     public void remove(){
+        if(destroyObstacle)
+            game.setNumberOfSuccessfulBombs(game.getNumberOfSuccessfulBombs() + 1);
         game.removeBomb(this);
     }
 
@@ -66,4 +88,15 @@ public abstract class Bomb extends Rectangle {
     public double getRadius() {
         return radius;
     }
+
+    public void checkCollision(){
+        for(Node node: game.getObstacles().getChildren()){
+            Obstacle obstacle = (Obstacle) node;
+            if(this.getBoundsInParent().intersects(obstacle.getBoundsInParent())){
+                obstacle.explosion();
+                destroyObstacle = true;
+            }
+        }
+    }
+
 }

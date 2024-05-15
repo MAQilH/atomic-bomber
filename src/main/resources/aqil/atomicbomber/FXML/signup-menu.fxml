@@ -35,26 +35,26 @@
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
-                <TextField promptText="Username" />
+                <TextField fx:id="username_field" promptText="Username" />
                 <Label fx:id="username_error_lbl" styleClass="error_lbl" text="Label" />
             </VBox>
             <VBox fx:id="password_count" prefHeight="200.0" prefWidth="100.0">
-                <PasswordField promptText="Password">
+                <PasswordField fx:id="password_field" promptText="Password">
                     <VBox.margin>
                         <Insets bottom="2.0" />
                     </VBox.margin>
                 </PasswordField>
-                <PasswordField promptText="Repeat Password" />
+                <PasswordField fx:id="repeat_password_field" promptText="Repeat Password" />
                 <Label fx:id="password_error_lbl" styleClass="error_lbl" text="Label" />
             </VBox>
         </VBox>
-        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sign Up">
+        <Button fx:id="signup_btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sign Up">
          <VBox.margin>
              <Insets top="25.0" />
          </VBox.margin>
         </Button>
         <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
-            <Hyperlink onAction="#onLogin" text="have you already created an account?" />
+            <Hyperlink fx:id="login_btn" text="have you already created an account?" />
         </VBox>
         <padding>
          <Insets left="25.0" right="25.0" />

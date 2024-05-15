@@ -6,14 +6,16 @@ import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 
-public class WarplaneMoveAnimation extends Transition {
+import java.io.Serializable;
 
-    private final int duration = 5000;
+public class WarplaneMoveAnimation extends Transition implements Serializable {
+
+    public static final int DURATION = 5000;
     Warplane warplane;
     public WarplaneMoveAnimation(Warplane warplane){
         this.warplane = warplane;
         setCycleCount(-1);
-        setCycleDuration(javafx.util.Duration.millis(duration));
+        setCycleDuration(javafx.util.Duration.millis(DURATION));
     }
     @Override
     protected void interpolate(double v) {
@@ -25,16 +27,18 @@ public class WarplaneMoveAnimation extends Transition {
             y = 10;
             flattenWarplane();
         }
+        if(y + warplane.getHeight() > Game.GROUND){
+            warplane.setCurrentHp(0);
+            stop();
+        }
         warplane.setY(y);
         warplane.setX(x);
-        System.out.println(warplane.getRotate());
     }
 
     void flattenWarplane(){
         Duration duration = Duration.millis(50);
         RotateTransition rotateTransition = new RotateTransition(duration, warplane);
         double dest = 0;
-        System.out.println(warplane.getRotate());
         if(Math.abs(warplane.getRotate() - 180) < 90) dest = 180;
         else if(warplane.getRotate() > 180) dest = 360;
         rotateTransition.setByAngle(dest - warplane.getRotate());

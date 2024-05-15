@@ -1,0 +1,8 @@
+#menu_count{
+    -fx-background-color: #312d2d;
+}
+
+#volume_btn:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.9;
+}

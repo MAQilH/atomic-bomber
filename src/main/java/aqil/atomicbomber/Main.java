@@ -1,32 +1,45 @@
 package aqil.atomicbomber;
 
+import aqil.atomicbomber.controller.Database;
+import aqil.atomicbomber.controller.MenuLoader;
 import aqil.atomicbomber.model.App;
+import aqil.atomicbomber.model.Menu;
+import aqil.atomicbomber.model.User;
 import aqil.atomicbomber.view.GameLauncher;
 import javafx.application.Application;
-import javafx.beans.Observable;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Random;
+
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        GameLauncher gameLauncher = new GameLauncher();
-        gameLauncher.start(stage);
+
+        Menu.loader();
+        App.getInstance().setStage(stage);
+        MenuLoader.setMenu(Menu.MAIN_MENU);
+        stage.show();
+//        GameLauncher gameLauncher = new GameLauncher();
+//        App.getInstance().setGameLauncher(gameLauncher);
+//        App.getInstance().setStage(stage);
+//        gameLauncher.start(stage);
+//
+//        Database database = Database.getInstance();
+//
+//        User user = new User(0, "aqil", "1234");
+//        System.out.println(database.getUserWithUsername("aqil").getId());
+//
+//        URL url = HelloMenu.class.getResource("/FXML/Hello.fxml");
+//        URL url = Main.class.getResource("/aqil/atomicbomber/FXML/pause-menu.fxml");
+//        Menu.loader();
+//        Pane pane = Menu.PAUSE_MENU.getRoot();
+//        Scene scene = new Scene(pane);
+
     }
+
+
 
     public static void main(String[] args) {
         launch();

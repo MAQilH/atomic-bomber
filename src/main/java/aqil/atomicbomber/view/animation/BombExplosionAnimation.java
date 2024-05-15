@@ -9,7 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
-public class BombExplosionAnimation extends Transition {
+import java.io.Serializable;
+
+public class BombExplosionAnimation extends Transition implements Serializable {
     private Bomb bomb;
     private String bombImagesAddress;
     private int frame;
@@ -28,6 +30,7 @@ public class BombExplosionAnimation extends Transition {
 
         setCycleCount(1);
         setCycleDuration(Duration.millis(DURATION));
+
     }
 
     @Override
@@ -43,8 +46,7 @@ public class BombExplosionAnimation extends Transition {
         bomb.setWidth(initWidth + (bomb.getRadius() - initWidth)*v);
         bomb.setY(Game.GROUND - bomb.getHeight());
         bomb.setX(initCenter - bomb.getWidth()/2);
-        setOnFinished((event -> {
-            bomb.remove();
-        }));
+
+        if(v < 0.75) bomb.checkCollision();
     }
 }

@@ -1,6 +1,10 @@
 package aqil.atomicbomber.view;
 
+import aqil.atomicbomber.controller.Database;
+import aqil.atomicbomber.controller.MenuLoader;
 import aqil.atomicbomber.model.App;
+import aqil.atomicbomber.model.Menu;
+import aqil.atomicbomber.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -27,19 +31,69 @@ public class LoginMenuController implements Initializable {
     public TextField username_field;
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    private void reset(){
         password_count.getChildren().remove(password_error_lbl);
         username_count.getChildren().remove(username_error_lbl);
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        reset();
 
-
+        signup_btn.setOnMouseClicked(e -> onSignup());
+        login_btn.setOnMouseClicked(e -> onLogin());
+        guest_btn.setOnMouseClicked(e -> onGuest());
     }
 
     private void onSignup(){
-//        Stage stage = App.getInstance().getStage();
-//
-//        String Main;
-//        Pane pane = FXMLLoader.load(new URL(Main));
-//        stage.setScene();
+        Stage stage = App.getInstance().getStage();
+        stage.setScene(Menu.SIGNUP_MENU.getScene());
+    }
+
+    private boolean loginValidation(String username, String password){
+        boolean isValid = true;
+        if(username.isEmpty()){
+            username_error_lbl.setText("Username is empty!");
+            username_count.getChildren().add(username_error_lbl);
+            isValid = false;
+        }
+        if(password.isEmpty()){
+            password_error_lbl.setText("Password is empty!");
+            password_count.getChildren().add(password_error_lbl);
+            isValid = false;
+        }
+        if(!isValid) return false;
+
+        Database database = Database.getInstance();
+        User user = database.getUserWithUsername(username);
+        if(user == null){
+            username_error_lbl.setText("Username not found!");
+            username_count.getChildren().add(username_error_lbl);
+            return false;
+        }
+        if(!user.getPassword().equals(password)){
+            password_error_lbl.setText("Password is incorrect!");
+            password_count.getChildren().add(password_error_lbl);
+            return false;
+        }
+        return true;
+    }
+
+    private void onLogin(){
+        String username = username_field.getText();
+        String password = password_field.getText();
+        reset();
+
+        if(loginValidation(username, password)){
+            enterUser(Database.getInstance().getUserWithUsername(username));
+        }
+    }
+
+    private void onGuest(){
+        enterUser(new User(0, "Guest", ""));
+    }
+
+    private void enterUser(User user){
+        App.getInstance().setUser(user);
+        MenuLoader.setMenu(Menu.MAIN_MENU);
     }
 }

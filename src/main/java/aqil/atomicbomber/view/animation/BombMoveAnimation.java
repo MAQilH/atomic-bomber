@@ -7,7 +7,9 @@ import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 
-public class BombMoveAnimation extends Transition {
+import java.io.Serializable;
+
+public class BombMoveAnimation extends Transition implements Serializable {
     private final int duration = 5000;
     private Bomb bomb;
     private RotateTransition rotateTransition;
@@ -31,6 +33,9 @@ public class BombMoveAnimation extends Transition {
         bomb.setSpeed(bomb.getSpeed() + bomb.getAcceleration());
         double y = bomb.getY() + bomb.getSpeed()*Math.sin(Math.toRadians(bomb.getRotate()));
         double x = bomb.getX() + bomb.getSpeed()*Math.cos(Math.toRadians(bomb.getRotate()));
+
+        if(x >= Game.WIDTH) x = -bomb.getWidth();
+        else if(x <= -bomb.getWidth()) x = Game.WIDTH;
 
         bomb.setY(y);
         bomb.setX(x);

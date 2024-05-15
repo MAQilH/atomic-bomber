@@ -1,0 +1,15 @@
+/*.info h-box label {*/
+/*    -fx-font-size: 20;*/
+/*    -fx-text-fill: white;*/
+
+/*}*/
+.info-count{
+    -fx-padding: 2px 5px;
+    /*-fx-opacity: 0.8;*/
+}
+
+.info-count Label{
+    -fx-font-size: 20;
+    -fx-text-fill: #605868;
+    font-family: Arial, sans-serif;
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="menu_count" alignment="TOP_CENTER" maxHeight="421.0" maxWidth="300.0" prefHeight="421.0" prefWidth="300.0" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aqil.atomicbomber.view.PauseMenuController">
+    <padding>
+        <Insets left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <stylesheets>
+        <URL value="@../Style/menu.css" />
+        <URL value="@../Style/pause-menu.css" />
+    </stylesheets>
+    <Button fx:id="resume_btn" mnemonicParsing="false" prefHeight="42.0" prefWidth="359.0" text="Resume" />
+    <Button fx:id="save_and_exit_btn" mnemonicParsing="false" prefHeight="26.0" prefWidth="475.0" text="Save &amp; Exit" />
+    <Button fx:id="exit_btn" mnemonicParsing="false" prefHeight="26.0" prefWidth="387.0" text="Exit" />
+<!--   <ToggleButton mnemonicParsing="false" text="ToggleButton" fx:id="toggle_btn"/>-->
+    <ImageView fx:id="volume_btn" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin>
+        <Image url="@../../../Images/unmute.png" />
+    </ImageView>
+    <Label prefHeight="38.0" prefWidth="279.0" text="W: up, S: down, D: increase speed, A: decrease speed" textFill="WHITE" />
+    <Label text="R: nuclear bomb, C: cluster bomb" textFill="WHITE" />
+    <MenuButton fx:id="music_menu" mnemonicParsing="false" prefHeight="26.0" prefWidth="377.0" text="Music">
+      <items>
+          <MenuItem mnemonicParsing="false" text="lay lay lay" />
+          <MenuItem mnemonicParsing="false" text="khanon bebakhshid" />
+         <MenuItem mnemonicParsing="false" text="reimagined" />
+      </items>
+        <VBox.margin>
+          <Insets top="20.0" />
+        </VBox.margin>
+    </MenuButton>
+</VBox>

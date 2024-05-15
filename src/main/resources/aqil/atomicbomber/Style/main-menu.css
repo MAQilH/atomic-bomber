@@ -21,7 +21,7 @@
     -fx-background-radius: 0 0 5px 0;
 }
 
-#new_game_lbl, #saved_game_btn {
+#new_game_btn , #saved_game_btn {
     -fx-background-color: transparent;
 }
 
