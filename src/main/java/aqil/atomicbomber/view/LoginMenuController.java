@@ -1,6 +1,7 @@
 package aqil.atomicbomber.view;
 
 import aqil.atomicbomber.controller.Database;
+import aqil.atomicbomber.controller.LoginController;
 import aqil.atomicbomber.controller.MenuLoader;
 import aqil.atomicbomber.model.App;
 import aqil.atomicbomber.model.Menu;
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginMenuController implements Initializable {
+public class LoginMenuController extends MenuController implements Initializable {
 
     public Label username_error_lbl;
     public Label password_error_lbl;
@@ -30,11 +31,14 @@ public class LoginMenuController implements Initializable {
     public PasswordField password_field;
     public TextField username_field;
 
+    private LoginController loginController = new LoginController();
 
-    private void reset(){
+
+    private void reset() {
         password_count.getChildren().remove(password_error_lbl);
         username_count.getChildren().remove(username_error_lbl);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         reset();
@@ -44,33 +48,31 @@ public class LoginMenuController implements Initializable {
         guest_btn.setOnMouseClicked(e -> onGuest());
     }
 
-    private void onSignup(){
-        Stage stage = App.getInstance().getStage();
-        stage.setScene(Menu.SIGNUP_MENU.getScene());
+    private void onSignup() {
+        MenuLoader.setMenu(Menu.SIGNUP_MENU);
     }
 
-    private boolean loginValidation(String username, String password){
+    private boolean loginValidation(String username, String password) {
         boolean isValid = true;
-        if(username.isEmpty()){
+        if (username.isEmpty()) {
             username_error_lbl.setText("Username is empty!");
             username_count.getChildren().add(username_error_lbl);
             isValid = false;
         }
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             password_error_lbl.setText("Password is empty!");
             password_count.getChildren().add(password_error_lbl);
             isValid = false;
         }
-        if(!isValid) return false;
+        if (!isValid) return false;
 
-        Database database = Database.getInstance();
-        User user = database.getUserWithUsername(username);
-        if(user == null){
+        User user = loginController.getUser(username);
+        if (user == null) {
             username_error_lbl.setText("Username not found!");
             username_count.getChildren().add(username_error_lbl);
             return false;
         }
-        if(!user.getPassword().equals(password)){
+        if (!user.getPassword().equals(password)) {
             password_error_lbl.setText("Password is incorrect!");
             password_count.getChildren().add(password_error_lbl);
             return false;
@@ -78,22 +80,22 @@ public class LoginMenuController implements Initializable {
         return true;
     }
 
-    private void onLogin(){
+    private void onLogin() {
         String username = username_field.getText();
         String password = password_field.getText();
         reset();
-
-        if(loginValidation(username, password)){
-            enterUser(Database.getInstance().getUserWithUsername(username));
+        if (loginValidation(username, password)) {
+            loginController.enterUser(loginController.getUser(username));
         }
     }
 
-    private void onGuest(){
-        enterUser(new User(0, "Guest", ""));
+    private void onGuest() {
+        loginController.enterUser(new User(0, "Guest", ""));
     }
 
-    private void enterUser(User user){
-        App.getInstance().setUser(user);
-        MenuLoader.setMenu(Menu.MAIN_MENU);
+    @Override
+    public void reload(Menu prevMenu) {
+        username_field.setText("");
+        password_field.setText("");
     }
 }

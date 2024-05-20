@@ -3,6 +3,7 @@ package aqil.atomicbomber.model.game;
 import aqil.atomicbomber.model.game.bombs.Bomb;
 import aqil.atomicbomber.model.game.bonus.Bonus;
 import aqil.atomicbomber.model.game.obstacles.Obstacle;
+import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -11,16 +12,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Group;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
     public static int WIDTH = 1500, HEIGHT = 800;
-    public static int GROUND = 725;
+    public static int GROUND = 725, WAVE_NUMBER = 3;
     private final transient Group bullets = new Group();
     private final transient Group bombs = new Group();
     private final transient Group obstacles = new Group();
     private final transient Group bonuses = new Group();
     private final ArrayList<Transition> animations = new ArrayList<>();
+    private final ArrayList<Timeline> timelines = new ArrayList<>();
     private Warplane warplane;
 
 
@@ -63,6 +66,14 @@ public class Game implements Serializable {
 
     public void removeAnimation(Transition animation){
         animations.remove(animation);
+    }
+
+    public void addTimeline(Timeline timeline){
+        timelines.add(timeline);
+    }
+
+    public void removeTimeline(Timeline timeline){
+        timelines.remove(timeline);
     }
 
     public void addBullet(Bullet bullet){
@@ -150,6 +161,10 @@ public class Game implements Serializable {
 
     public ArrayList<Transition> getAnimations() {
         return animations;
+    }
+
+    public ArrayList<Timeline> getTimelines(){
+        return timelines;
     }
 
     public int getWaveNumber() {

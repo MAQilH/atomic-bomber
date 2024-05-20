@@ -10,11 +10,11 @@ public class App {
     private Stage stage;
     private GameLauncher gameLauncher;
     private User user;
-    private final BooleanProperty isMuted;
+    private final Setting setting;
     private static App app = null;
 
     private App(){
-        isMuted = new SimpleBooleanProperty(this, "isMuted", true);
+        setting = new Setting();
     }
     public synchronized static App getInstance(){
         if(app == null)
@@ -46,15 +46,7 @@ public class App {
         this.user = user;
     }
 
-    public Boolean isMuted() {
-        return isMuted.get();
-    }
-
-    public void setMuted(Boolean muted) {
-        isMuted.set(muted);
-    }
-
-    public BooleanProperty isMutedProperty() {
-        return isMuted;
+    public Setting getSetting() {
+        return setting;
     }
 }

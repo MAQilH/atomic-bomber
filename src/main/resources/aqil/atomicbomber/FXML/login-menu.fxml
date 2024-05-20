@@ -7,8 +7,11 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aqil.atomicbomber.view.LoginMenuController">
-    <ImageView fitHeight="200.0" fitWidth="200.0">
+    <ImageView fitHeight="150.0" fitWidth="150.0">
         <Image url="@../../../Images/login-icon.png" />
+      <VBox.margin>
+         <Insets bottom="10.0" left="10.0" top="30.0" />
+      </VBox.margin>
     </ImageView>
     <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
         <opaqueInsets>
@@ -19,11 +22,11 @@
         </VBox.margin>
         <VBox prefWidth="100.0" spacing="5.0">
             <VBox fx:id="username_count" prefHeight="200.0" prefWidth="100.0">
-                <TextField fx:id="username_field" promptText="username" />
+                <TextField fx:id="username_field" promptText="Username" />
                 <Label fx:id="username_error_lbl" styleClass="error_lbl" text="error" />
             </VBox>
             <VBox fx:id="password_count" prefHeight="200.0" prefWidth="100.0">
-                <PasswordField fx:id="password_field" promptText="password" />
+                <PasswordField fx:id="password_field" promptText="Password" />
                 <Label fx:id="password_error_lbl" styleClass="error_lbl" text="error" />
             </VBox>
         </VBox>

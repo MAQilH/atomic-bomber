@@ -1,5 +1,8 @@
 package aqil.atomicbomber.model;
 
+import aqil.atomicbomber.utils.FileSaver;
+import javafx.scene.image.Image;
+
 public class User {
     private final String username;
     private final String password;
@@ -21,5 +24,9 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public Image getAvatar(){
+        return FileSaver.getUserAvatar(this);
     }
 }

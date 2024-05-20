@@ -1,0 +1,20 @@
+.label {
+    -fx-text-fill: white;
+}
+
+#game_status_lbl {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.label{
+    -fx-font-size: 18px;
+}
+
+.win_lbl {
+    -fx-text-fill: green;
+}
+
+.lose_lbl {
+    -fx-text-fill: red;
+}

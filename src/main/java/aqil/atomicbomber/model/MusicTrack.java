@@ -17,7 +17,7 @@ public enum MusicTrack {
 
     private MediaPlayer mediaPlayer = null;
     public void play(){
-        if(!App.getInstance().isMuted()){
+        if(!App.getInstance().getSetting().isMuted()){
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.setCycleCount(-1);
             mediaPlayer.play();
@@ -29,10 +29,10 @@ public enum MusicTrack {
                     mediaPlayer.play();
                 }
             };
-            App.getInstance().isMutedProperty().addListener(listener);
+            App.getInstance().getSetting().isMutedProperty().addListener(listener);
 
             mediaPlayer.setOnStopped(() -> {
-                App.getInstance().isMutedProperty().removeListener(listener);
+                App.getInstance().getSetting().isMutedProperty().removeListener(listener);
             });
         }
     }

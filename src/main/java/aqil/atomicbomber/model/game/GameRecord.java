@@ -1,23 +1,20 @@
 package aqil.atomicbomber.model.game;
 
-public class GameResult {
-    private final int userId;
+public class GameRecord {
     private final int wave;
     private final int kills;
     private final double hardness;
     private final double accurate;
-    private String username;
+    private final int rank;
+    private final String username;
 
-    public GameResult(int userId, int wave, int kills, double hardness, double accurate) {
-        this.userId = userId;
+    public GameRecord(int wave, int kills, double hardness, double accurate, int rank, String username) {
         this.wave = wave;
         this.kills = kills;
         this.hardness = hardness;
         this.accurate = accurate;
-    }
-
-    public int getUserId() {
-        return userId;
+        this.rank = rank;
+        this.username = username;
     }
 
     public int getWave() {
@@ -36,11 +33,11 @@ public class GameResult {
         return accurate;
     }
 
-    public String getUsername() {
-        return username;
+    public int getRank() {
+        return rank;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUsername() {
+        return username;
     }
 }

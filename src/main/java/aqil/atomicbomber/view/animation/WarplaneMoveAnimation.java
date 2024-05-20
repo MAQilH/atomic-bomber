@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class WarplaneMoveAnimation extends Transition implements Serializable {
 
-    public static final int DURATION = 5000;
+    public static final int DURATION = 50000;
     Warplane warplane;
     public WarplaneMoveAnimation(Warplane warplane){
         this.warplane = warplane;

@@ -1,5 +1,6 @@
 package aqil.atomicbomber.view;
 
+import aqil.atomicbomber.model.Menu;
 import aqil.atomicbomber.model.game.Game;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
@@ -34,7 +35,7 @@ public class GameActionController extends Rectangle {
                     gameLauncher.freezeGame();
                     break;
                 case ESCAPE:
-                    gameLauncher.pauseGame();
+                    gameLauncher.pauseGame(Menu.PAUSE_MENU.getRoot());
                     break;
                 case P:
                     gameLauncher.nextWave();

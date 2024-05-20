@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-private static Database instance = null;
+    private static Database instance = null;
 
     private Database() {
         connect();
@@ -58,6 +58,24 @@ private static Database instance = null;
         }
     }
 
+    public User getUserWithId(int id){
+        String sql = "SELECT * FROM USER WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeQuery();
+
+            ResultSet res = pstmt.getResultSet();
+            if (res.next()) {
+                String username = res.getString("username");
+                String password = res.getString("password");
+                return new User(id, username, password);
+            } else return null;
+        } catch (SQLException e) {
+            System.out.println("Could not get user from the database: " + e.getMessage());
+            return null;
+        }
+    }
+
     public User saveUser(String username, String password) {
         String sql = "INSERT INTO USER (username, password) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -75,16 +93,75 @@ private static Database instance = null;
         }
     }
 
+    public User updateUserUsername(int id, String newUsername){
+        String sql = "UPDATE USER SET username = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, newUsername);
+            pstmt.setInt(2, id);
+
+            pstmt.executeUpdate();
+
+            System.out.println("User updated in the database!");
+            return getUserWithId(id);
+        } catch (SQLException e) {
+            System.out.println("Could not update user in the database: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public User updateUserPassword(int id, String newPassword){
+        String sql = "UPDATE USER SET password = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, newPassword);
+            pstmt.setInt(2, id);
+
+            pstmt.executeUpdate();
+
+            System.out.println("User updated in the database!");
+            return getUserWithId(id);
+        } catch (SQLException e) {
+            System.out.println("Could not update user in the database: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public void deleteUserFromUserTable(int id){
+        String sql = "DELETE FROM USER WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("User deleted from the database!");
+        } catch (SQLException e) {
+            System.out.println("Could not delete user from the database: " + e.getMessage());
+        }
+    }
+
+    public void deleteUserFromGameResultTable(int id){
+        String sql = "DELETE FROM GAME_RESULT WHERE user_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("User's game results deleted from the database!");
+        } catch (SQLException e) {
+            System.out.println("Could not delete user's game results from the database: " + e.getMessage());
+        }
+    }
+
+    public void deleteUser(int id){
+        deleteUserFromUserTable(id);
+        deleteUserFromGameResultTable(id);
+    }
+
     public void saveGameResult(GameResult gameResult){
-        String sql = "INSERT INTO GAME_RESULT (user_id, score, wave, kills, hardness, accurate) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO GAME_RESULT (user_id, wave, kills, hardness, accurate) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setInt(1, gameResult.getUserId());
-            pstmt.setDouble(2, gameResult.getScore());
-            pstmt.setInt(3, gameResult.getWave());
-            pstmt.setInt(4, gameResult.getKills());
-            pstmt.setDouble(5, gameResult.getHardness());
-            pstmt.setDouble(6, gameResult.getAccurate());
+            pstmt.setInt(2, gameResult.getWave());
+            pstmt.setInt(3, gameResult.getKills());
+            pstmt.setDouble(4, gameResult.getHardness());
+            pstmt.setDouble(5, gameResult.getAccurate());
 
             pstmt.executeUpdate();
 
@@ -95,22 +172,20 @@ private static Database instance = null;
     }
 
     public ArrayList<GameResult> loadGameResultWithColumn(String column, int numberOfLoad){
-        String sql = "SELECT * FROM GAME_RESULT ORDER BY ? DESC LIMIT ?";
+        String sql = "SELECT * FROM GAME_RESULT ORDER BY " + column +  " DESC LIMIT ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, column);
-            pstmt.setInt(2, numberOfLoad);
+            pstmt.setInt(1, numberOfLoad);
             pstmt.executeQuery();
 
             ResultSet res = pstmt.getResultSet();
             ArrayList<GameResult> gameResults = new ArrayList<>();
             while (res.next()) {
                 int userId = res.getInt("user_id");
-                double score = res.getDouble("score");
                 int wave = res.getInt("wave");
                 int kills = res.getInt("kills");
                 double hardness = res.getDouble("hardness");
                 double accurate = res.getDouble("accurate");
-                gameResults.add(new GameResult(userId, score, wave, kills, hardness, accurate));
+                gameResults.add(new GameResult(userId, wave, kills, hardness, accurate));
             }
             return gameResults;
         } catch (SQLException e) {

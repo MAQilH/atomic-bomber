@@ -5,6 +5,7 @@ import aqil.atomicbomber.model.App;
 import aqil.atomicbomber.model.Menu;
 import aqil.atomicbomber.model.MusicTrack;
 import aqil.atomicbomber.model.game.Game;
+import aqil.atomicbomber.model.game.GameResult;
 import aqil.atomicbomber.model.game.Warplane;
 import aqil.atomicbomber.model.game.obstacles.*;
 import javafx.animation.KeyFrame;
@@ -14,6 +15,7 @@ import javafx.animation.Transition;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -29,7 +31,6 @@ public class GameLauncher {
     private StackPane root;
     private Game game;
     private GameActionController actionController;
-    private MusicTrack musicTrack = null;
 
     public void start() {
         root = new StackPane();
@@ -43,23 +44,16 @@ public class GameLauncher {
         showScene();
 
         setMusic(MusicTrack.TRACK1);
-    }
 
-    public MusicTrack getMusicTrack() {
-        return musicTrack;
     }
-
-    public void setMusicTrack(MusicTrack musicTrack) {
-        this.musicTrack = musicTrack;
-    }
-
     public void setMusic(MusicTrack newMusicTrack) {
         stopMusic();
-        musicTrack = newMusicTrack;
-        musicTrack.play();
+        App.getInstance().getSetting().setMusicTrack(newMusicTrack);
+        App.getInstance().getSetting().getMusicTrack().play();
     }
 
     public void stopMusic(){
+        MusicTrack musicTrack = App.getInstance().getSetting().getMusicTrack();
         if(musicTrack != null)
             musicTrack.stop();
     }
@@ -101,7 +95,19 @@ public class GameLauncher {
         Stage stage = App.getInstance().getStage();
         stage.setScene(new Scene(root));
         stage.centerOnScreen();
+
+        blackAndWhite();
+
         stage.show();
+    }
+
+    private void blackAndWhite() {
+        if(App.getInstance().getSetting().isBlackAndWhite()){
+            ColorAdjust colorAdjust = new ColorAdjust();
+            System.out.println("Black and white");
+            colorAdjust.setSaturation(-1);
+            root.setEffect(colorAdjust);
+        }
     }
 
     void initializeRoot(){
@@ -150,7 +156,7 @@ public class GameLauncher {
         if(wave == 1){
             gameRoot.getChildren().add(game.getBullets());
             gameRoot.getChildren().add(game.getObstacles());
-            game.setWarplane(new Warplane(game));
+            addWarplane();
             gameRoot.getChildren().add(game.getBombs());
             gameRoot.getChildren().add(game.getWarplane());
             gameRoot.getChildren().add(game.getBonuses());
@@ -161,12 +167,23 @@ public class GameLauncher {
         initTrench(wave);
         initTank(wave);
         initTruck(wave);
+        initMig(wave);
+    }
+
+    void addWarplane(){
+        game.setWarplane(new Warplane(game));
+
+        game.getWarplane().currentHpProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.doubleValue() <= 0){
+                endGame(false);
+            }
+        });
     }
 
     void initTank(int wave){
         int tankNumber = 2 + wave;
         for (int tankIndex = 0; tankIndex < tankNumber; tankIndex++) {
-            Tank tank = new Tank(game);
+            Tank tank = new Tank(game, App.getInstance().getSetting().getDifficulty());
             tank.start();
         }
     }
@@ -203,6 +220,14 @@ public class GameLauncher {
         }
     }
 
+    void initMig(int wave){
+        if(wave == Game.WAVE_NUMBER){
+            Mig mig = new Mig(game, App.getInstance().getSetting().getDifficulty());
+            mig.start();
+
+        }
+    }
+
     public void freezeGame(){
         if(game.getFreezePercentage() < 100) return;
         game.setFreezePercentage(0);
@@ -227,30 +252,32 @@ public class GameLauncher {
         timer.schedule(task, 5000, 5000);
     }
 
-    public void pauseGame() {
+    public void pauseGame(Node node) {
         blurScene();
 
         for(Transition transition: game.getAnimations()){
             transition.pause();
         }
+        for(Timeline timeline: game.getTimelines()){
+            timeline.pause();
+        }
         actionController.setDisable(true);
 
-        Pane pauseMenu = Menu.PAUSE_MENU.getRoot();
-        pauseMenu.setFocusTraversable(true);
+        node.setFocusTraversable(true);
 
-        root.getChildren().add(pauseMenu);
+        root.getChildren().add(node);
     }
 
-
-
-    public void resumeGame() {
+    public void resumeGame(Node node) {
         for(Transition transition: game.getAnimations()){
             transition.play();
         }
+        for(Timeline timeline: game.getTimelines()){
+            timeline.play();
+        }
         actionController.setDisable(false);
 
-        Pane pauseMenu = Menu.PAUSE_MENU.getRoot();
-        root.getChildren().remove(pauseMenu);
+        root.getChildren().remove(node);
 
         unBlurScene();
     }
@@ -284,8 +311,8 @@ public class GameLauncher {
         }
         game.setAccurate();
         int waveNumber = game.getWaveNumber();
-        if(waveNumber == 3){
-            winGame();
+        if(waveNumber == Game.WAVE_NUMBER){
+            endGame(true);
             return;
         }
         waveNumber++;
@@ -293,8 +320,17 @@ public class GameLauncher {
         initializeGameObject(waveNumber);
     }
 
-    public void winGame(){
-        App.getInstance().getStage().close();
+    public void endGame(boolean win){
+        stopMusic();
+        GameResult gameResult = new GameResult(
+                App.getInstance().getUser().getId(),
+                win ? Game.WAVE_NUMBER: game.getWaveNumber() - 1,
+                game.getKillingNumber(),
+                App.getInstance().getSetting().getDifficulty().getValue() * game.getKillingNumber(),
+                game.getAccurate()
+                );
+        ((GameResultMenuController) Menu.GAME_RESULT_MENU.getMenuController()).updateMenu(gameResult);
+        pauseGame(Menu.GAME_RESULT_MENU.getRoot());
     }
 
     public void getNuclearBomb() {
@@ -306,7 +342,7 @@ public class GameLauncher {
     }
 
     public void addTank() {
-        Tank tank = new Tank(game);
+        Tank tank = new Tank(game, App.getInstance().getSetting().getDifficulty());
         tank.start();
     }
 

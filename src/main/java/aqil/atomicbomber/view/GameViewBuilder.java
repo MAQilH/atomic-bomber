@@ -7,6 +7,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.Property;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -26,6 +27,7 @@ public class GameViewBuilder {
     void start(){
         addStyle();
         addInfo();
+        addFreezeProgressBar();
     }
 
     void addStyle(){
@@ -41,7 +43,6 @@ public class GameViewBuilder {
         addInfoLabel(info, "Killing", game.killingNumberProperty());
         addInfoLabel(info, "Nuclear Bombs", game.numberOfNuclearBombsProperty());
         addInfoLabel(info, "Cluster Bombs", game.numberOfClusterBombsProperty());
-        addInfoLabel(info, "Freeze Percentage", game.freezePercentageProperty());
         addInfoLabel(info, "Wave Number", game.waveNumberProperty());
         root.getChildren().add(info);
     }
@@ -69,5 +70,21 @@ public class GameViewBuilder {
             colorAnimation.setAutoReverse(true);
             colorAnimation.play();
         });
+    }
+
+    void addFreezeProgressBar(){
+        ProgressBar progressBar = new ProgressBar();
+
+        progressBar.getStyleClass().add("freeze-progress-bar");
+        AnchorPane.setRightAnchor(progressBar, 5.0);
+        AnchorPane.setTopAnchor(progressBar, 5.0);
+
+
+        progressBar.setProgress((double) game.getFreezePercentage() /100);
+        game.freezePercentageProperty().addListener((observable, oldValue, newValue) -> {
+            progressBar.setProgress(newValue.doubleValue() / 100);
+        });
+
+        root.getChildren().add(progressBar);
     }
 }

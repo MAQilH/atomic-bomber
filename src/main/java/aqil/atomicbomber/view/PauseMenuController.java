@@ -1,6 +1,7 @@
 package aqil.atomicbomber.view;
 
 import aqil.atomicbomber.controller.MenuLoader;
+import aqil.atomicbomber.controller.PauseController;
 import aqil.atomicbomber.model.App;
 import aqil.atomicbomber.model.Menu;
 import aqil.atomicbomber.model.MusicTrack;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class PauseMenuController implements Initializable {
+public class PauseMenuController extends MenuController implements Initializable {
 
     public VBox menu_count;
     public Button resume_btn;
@@ -29,13 +30,15 @@ public class PauseMenuController implements Initializable {
 
     private final Map<MenuItem, MusicTrack> menuItemToTrackMap = new HashMap<>();
 
+    private final PauseController pauseController = new PauseController();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menu_count.setOnKeyPressed((keyEvent -> {
             KeyCode code = keyEvent.getCode();
-            switch (code){
+            switch (code) {
                 case ESCAPE:
-                    App.getInstance().getGameLauncher().resumeGame();
+                    pauseController.resumeGame();
                     break;
             }
         }));
@@ -47,7 +50,7 @@ public class PauseMenuController implements Initializable {
         initializeMusicMenu();
     }
 
-    private void initializeMusicMenu(){
+    private void initializeMusicMenu() {
         MusicTrack[] tracks = MusicTrack.values();
         for (int i = 0; i < music_menu.getItems().size(); i++) {
             MenuItem item = music_menu.getItems().get(i);
@@ -62,19 +65,24 @@ public class PauseMenuController implements Initializable {
     }
 
     private void onSave() {
-        App.getInstance().getGameLauncher().saveGame();
+        pauseController.saveGame();
     }
 
-    private void onExit(){
-        MenuLoader.setMenu(Menu.MAIN_MENU);
+    private void onExit() {
+        pauseController.exitGame();
     }
 
-    private void onVolume(){
+    private void onVolume() {
         Image image;
-        if(App.getInstance().isMuted())
+        if (App.getInstance().getSetting().isMuted())
             image = new Image(getClass().getResource("/Images/unmute.png").toExternalForm());
         else image = new Image(getClass().getResource("/Images/mute.png").toExternalForm());
         volume_btn.setImage(image);
-        App.getInstance().setMuted(!App.getInstance().isMuted());
+        App.getInstance().getSetting().setMuted(!App.getInstance().getSetting().isMuted());
+    }
+
+    @Override
+    public void reload(Menu prevMenu) {
+
     }
 }

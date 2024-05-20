@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="512.0" prefWidth="375.0" stylesheets="@../Style/menu.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
-   </children>
-</StackPane>
+<AnchorPane prefHeight="512.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aqil.atomicbomber.view.ScoreboardMenuController">
+   <Label fx:id="score_board_lbl" layoutX="157.0" layoutY="11.0" text="Score Board" AnchorPane.leftAnchor="157.0" AnchorPane.topAnchor="11.0" />
+    <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="494.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <columns>
+          <TableColumn fx:id="rank_column" prefWidth="59.40000760555267" text="Rank" />
+          <TableColumn fx:id="username_column" editable="false" prefWidth="92.60001373291016" sortable="false" text="Username" />
+          <TableColumn fx:id="hardness_column" prefWidth="91.5999755859375" text="Hardness" />
+          <TableColumn fx:id="kill_column" prefWidth="75.0" text="Kill" />
+          <TableColumn fx:id="wave_column" prefWidth="55.199981689453125" text="Wave" />
+          <TableColumn fx:id="accurate_column" prefWidth="96.79998779296875" text="Accurate" />
+      </columns>
+    </TableView>
+    <ImageView id="back_btn" fx:id="back_btn" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="8.0">
+        <image>
+            <Image url="@../../../Images/back-icon.png" />
+        </image>
+    </ImageView>
+   <stylesheets>
+      <URL value="@../Style/menu.css" />
+      <URL value="@../Style/scoreboard-menu.css" />
+   </stylesheets>
+</AnchorPane>

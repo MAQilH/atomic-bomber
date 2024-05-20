@@ -2,6 +2,10 @@
     -fx-background-color: #312d2d;
 }
 
+#menu_count{
+    -fx-background-color: #312d2d;
+}
+
 .button {
     -fx-background-color: #727171;
     -fx-text-fill: white;
@@ -13,9 +17,14 @@
 }
 
 .button:hover {
-    -fx-background-color: #a0a2a4;
+    -fx-background-color: #555555; /* Hover background color */
     -fx-cursor: hand;
     -fx-opacity: 1;
+    -fx-effect: dropshadow( gaussian , rgba(114, 113, 113, 0.75), 3, 0.5, 0, 0 );
+}
+
+.button:pressed {
+    -fx-background-color: #333333; /* Pressed background color */
 }
 
 .text-field, .password-field {
@@ -50,4 +59,46 @@
 .error_lbl {
     -fx-text-fill: #ff5a5a;
     -fx-font-size: 10px;
+}
+
+.radio-button {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+}
+
+.radio-button:hover{
+    -fx-cursor: hand;
+}
+
+.radio-button .radio {
+    -fx-mark-color: #444444;
+    -fx-mark-highlight-color: #00ccff;
+}
+
+.radio-button:selected .radio {
+    -fx-mark-color: #00ccff;
+}
+
+.radio-button .radio:hover {
+    -fx-mark-highlight-color: #0099cc;
+}
+
+.radio-button .radio:focused {
+    -fx-mark-highlight-color: #00ccff;
+}
+
+.radio-button .radio {
+    -fx-background-color: transparent, #444444;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 1em;
+    -fx-padding: 0.2em;
+    -fx-effect: dropshadow( gaussian , rgba(0, 0, 0, 0.75), 1, 0.5, 0, 0 );
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: transparent, #00ccff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 1em;
+    -fx-padding: 0.2em;
+    -fx-effect: dropshadow( gaussian , rgba(0, 204, 255, 0.75), 5, 0.5, 0, 0 );
 }

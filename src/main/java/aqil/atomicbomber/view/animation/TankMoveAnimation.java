@@ -11,7 +11,7 @@ public class TankMoveAnimation extends Transition implements Serializable {
     public TankMoveAnimation(Tank tank){
         this.tank = tank;
         setCycleCount(-1);
-        setCycleDuration(javafx.util.Duration.millis(50000));
+        setCycleDuration(javafx.util.Duration.millis(500));
     }
     @Override
     protected void interpolate(double v) {

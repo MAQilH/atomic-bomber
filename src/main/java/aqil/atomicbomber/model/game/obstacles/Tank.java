@@ -1,5 +1,6 @@
 package aqil.atomicbomber.model.game.obstacles;
 
+import aqil.atomicbomber.model.Difficulty;
 import aqil.atomicbomber.model.game.Game;
 import aqil.atomicbomber.utils.Random;
 import aqil.atomicbomber.view.animation.ObstacleBurningAnimation;
@@ -8,8 +9,8 @@ import javafx.util.Pair;
 
 public class Tank extends Fighter {
     public static double HEIGHT = 60, WIDTH = 90;
-    public Tank(Game game){
-        super(WIDTH, HEIGHT, "tank.png", game, 6, 100);
+    public Tank(Game game, Difficulty difficulty){
+        super(WIDTH, HEIGHT, "tank.png", game, 6, 25, difficulty);
     }
 
     @Override
@@ -48,5 +49,10 @@ public class Tank extends Fighter {
     @Override
     public void resume() {
         tankMoveAnimation.play();
+    }
+
+    @Override
+    public boolean checkInRadios(double theta) {
+        return theta < Math.PI/3 && theta > Math.PI/6;
     }
 }

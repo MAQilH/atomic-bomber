@@ -8,6 +8,7 @@ import aqil.atomicbomber.model.User;
 import aqil.atomicbomber.view.GameLauncher;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -19,7 +20,8 @@ public class Main extends Application {
 
         Menu.loader();
         App.getInstance().setStage(stage);
-        MenuLoader.setMenu(Menu.MAIN_MENU);
+        MenuLoader.setMenu(Menu.LOGIN_MENU);
+        initializeStage(stage);
         stage.show();
 //        GameLauncher gameLauncher = new GameLauncher();
 //        App.getInstance().setGameLauncher(gameLauncher);
@@ -37,6 +39,12 @@ public class Main extends Application {
 //        Pane pane = Menu.PAUSE_MENU.getRoot();
 //        Scene scene = new Scene(pane);
 
+    }
+
+    public void initializeStage(Stage stage){
+        Image image = new Image(getClass().getResource("/Images/game-icon.png").toExternalForm());
+        stage.getIcons().add(image);
+        stage.setTitle("Atomic Bomber");
     }
 
 

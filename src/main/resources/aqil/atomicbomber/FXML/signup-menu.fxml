@@ -16,7 +16,7 @@
             <VBox.margin>
                 <Insets bottom="30.0" top="40.0" />
             </VBox.margin>
-            <Image url="@../../../Images/avatar1.png" />
+            <Image url="@../../../Images/avatars/avatar1.png" />
          <viewport>
             <Rectangle2D />
          </viewport>

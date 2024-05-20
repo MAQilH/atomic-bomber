@@ -32,7 +32,7 @@ public class Warplane extends Rectangle implements Serializable {
     public static double WIDTH = 120, HEIGHT = 80;
     public static double ROTATE_RATE = 10, SPEED_RATE = 0.5, ROTATE_DURATION = 75;
     public static double MAX_HP = 100;
-    private DoubleProperty currentHp;
+    private final DoubleProperty currentHp;
     private double speed = 4;
     private final Game game;
 
