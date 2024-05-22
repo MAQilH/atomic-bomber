@@ -5,12 +5,12 @@ import aqil.atomicbomber.model.Menu;
 import aqil.atomicbomber.model.User;
 
 public class LoginController {
-    public User getUser(String username){
+    public User getUser(String username) {
         Database database = Database.getInstance();
         return database.getUserWithUsername(username);
     }
 
-    public void enterUser(User user){
+    public void enterUser(User user) {
         App.getInstance().setUser(user);
         MenuLoader.setMenu(Menu.MAIN_MENU);
     }

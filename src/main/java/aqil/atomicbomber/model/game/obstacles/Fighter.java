@@ -11,10 +11,11 @@ import javafx.util.Pair;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class  Fighter extends Obstacle{
+public abstract class Fighter extends Obstacle {
     protected double radius = 500;
     protected double speed = 3;
     protected boolean canHit = true;
+
     public Fighter(double WIDTH, double HEIGHT, String imageName, Game game, int killingValue, int freezeValue, Difficulty difficulty) {
         super(WIDTH, HEIGHT, imageName, game, killingValue, freezeValue);
         radius *= difficulty.getValue();
@@ -39,14 +40,14 @@ public abstract class  Fighter extends Obstacle{
 
     public abstract boolean checkInRadios(double theta);
 
-    public boolean warplaneInRange(){
+    public boolean warplaneInRange() {
         double theta = -getAngleWithWarplane();
-        if(speed < 0) theta = Math.PI - theta;
+        if (speed < 0) theta = Math.PI - theta;
         return getDistFromWarplane() < radius && checkInRadios(theta);
     }
 
     public void bang() {
-        if(canHit && warplaneInRange()){
+        if (canHit && warplaneInRange()) {
             Bullet bullet = new Bullet(game, this);
             bullet.start();
             canHit = false;

@@ -16,6 +16,7 @@ public abstract class Bonus extends Rectangle implements Serializable {
     protected final Game game;
     protected double speed = 0.5;
     Obstacle org;
+
     public Bonus(Game game, Obstacle org, String imageName) {
         super(WIDTH, HEIGHT);
         this.game = game;
@@ -23,6 +24,7 @@ public abstract class Bonus extends Rectangle implements Serializable {
 
         setFill(new ImagePattern(new Image(Warplane.class.getResource("/Images/" + imageName).toExternalForm())));
     }
+
     public void start() {
         setX(org.getX() + org.getWidth() / 2 - WIDTH / 2);
         setY(org.getY() + org.getHeight() / 2 - HEIGHT / 2);
@@ -33,6 +35,7 @@ public abstract class Bonus extends Rectangle implements Serializable {
     }
 
     BonusMoveAnimation bonusMoveAnimation;
+
     private void startMove() {
         bonusMoveAnimation = new BonusMoveAnimation(this);
         bonusMoveAnimation.play();

@@ -1,5 +1,6 @@
 package aqil.atomicbomber.model.game.obstacles;
 
+import aqil.atomicbomber.model.App;
 import aqil.atomicbomber.model.Difficulty;
 import aqil.atomicbomber.model.game.Game;
 import aqil.atomicbomber.utils.Random;
@@ -10,7 +11,7 @@ import javafx.util.Duration;
 
 import java.security.Key;
 
-public class Mig extends Fighter{
+public class Mig extends Fighter {
     public static final int WIDTH = 160, HEIGHT = 80;
 
     public Mig(Game game, Difficulty difficulty) {
@@ -20,10 +21,10 @@ public class Mig extends Fighter{
     @Override
     public void start() {
         setX(-WIDTH);
-        setY(Random.randomDouble(10, (double) (Game.GROUND - HEIGHT - 10) /2));
+        setY(Random.randomDouble(10, (double) (Game.GROUND - HEIGHT - 10) / 2));
         game.addObstacle(this);
         speed += Random.randomDouble(-0.7, 0.7);
-        if(Random.bern(0.5)){
+        if (Random.bern(0.5)) {
             speed = -speed;
             setScaleX(-1);
             setX(Game.WIDTH);
@@ -46,7 +47,8 @@ public class Mig extends Fighter{
     }
 
     private MigMoveAnimation migMoveAnimation;
-    private void startMove(){
+
+    private void startMove() {
         migMoveAnimation = new MigMoveAnimation(this);
         game.addAnimation(migMoveAnimation);
         migMoveAnimation.play();
@@ -56,6 +58,7 @@ public class Mig extends Fighter{
     public void onExplosion() {
         migMoveAnimation.stop();
         game.removeAnimation(migMoveAnimation);
+        App.getInstance().getGameLauncher().checkWaveEnded();
     }
 
     @Override
@@ -71,6 +74,6 @@ public class Mig extends Fighter{
     @Override
     public boolean checkInRadios(double theta) {
         theta = Math.abs(theta);
-        return theta < Math.PI/3;
+        return theta < Math.PI / 3;
     }
 }

@@ -19,22 +19,22 @@ public class GameViewBuilder {
     private AnchorPane root;
     private Game game;
 
-    GameViewBuilder(AnchorPane root, Game game){
+    GameViewBuilder(AnchorPane root, Game game) {
         this.root = root;
         this.game = game;
     }
 
-    void start(){
+    void start() {
         addStyle();
         addInfo();
         addFreezeProgressBar();
     }
 
-    void addStyle(){
+    void addStyle() {
         root.getStylesheets().add(getClass().getResource("/aqil/atomicbomber/Style/game.css").toExternalForm());
     }
 
-    void addInfo(){
+    void addInfo() {
         VBox info = new VBox();
         info.getStyleClass().add("info");
 
@@ -47,7 +47,7 @@ public class GameViewBuilder {
         root.getChildren().add(info);
     }
 
-    void addInfoLabel(Pane count, String label, Property<Number> prop){
+    void addInfoLabel(Pane count, String label, Property<Number> prop) {
         HBox infoCount = new HBox();
         infoCount.getStyleClass().add("info-count");
 
@@ -72,7 +72,7 @@ public class GameViewBuilder {
         });
     }
 
-    void addFreezeProgressBar(){
+    void addFreezeProgressBar() {
         ProgressBar progressBar = new ProgressBar();
 
         progressBar.getStyleClass().add("freeze-progress-bar");
@@ -80,7 +80,7 @@ public class GameViewBuilder {
         AnchorPane.setTopAnchor(progressBar, 5.0);
 
 
-        progressBar.setProgress((double) game.getFreezePercentage() /100);
+        progressBar.setProgress((double) game.getFreezePercentage() / 100);
         game.freezePercentageProperty().addListener((observable, oldValue, newValue) -> {
             progressBar.setProgress(newValue.doubleValue() / 100);
         });

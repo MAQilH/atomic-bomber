@@ -13,7 +13,7 @@ public class FileSaver {
 
     public static final String SAVED_AVATAR_PATH = "file:C:\\Users\\moham\\IdeaProjects\\AtomicBomber\\saved_avatar\\";
 
-    public static void saveUserAvatar(User user, String imageUrl){
+    public static void saveUserAvatar(User user, String imageUrl) {
         String targetPath = "saved_avatar/" + user.getId() + ".png";
         try {
             URL url = new URL(imageUrl);
@@ -29,11 +29,11 @@ public class FileSaver {
         return new Image(imageUrl);
     }
 
-    public static Image getUserAvatar(User user){
+    public static Image getUserAvatar(User user) {
         Image image;
-        try{
+        try {
             image = loadImage(SAVED_AVATAR_PATH + user.getId() + ".png");
-        } catch (Exception e){
+        } catch (Exception e) {
             image = loadImage(SAVED_AVATAR_PATH + "0.png");
         }
         return image;

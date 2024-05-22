@@ -8,7 +8,8 @@ public class Random {
     public static int randomInt(int min, int max) {
         return (int) randomDouble(min, max);
     }
-    public static boolean bern(double p){
+
+    public static boolean bern(double p) {
         return randomDouble(0, 1) < p;
     }
 }

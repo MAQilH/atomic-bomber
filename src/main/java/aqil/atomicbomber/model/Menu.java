@@ -26,12 +26,12 @@ public enum Menu {
     private Scene scene = null;
     private MenuController menuController;
 
-    Menu(String address){
+    Menu(String address) {
         this.address = address;
     }
 
-    public static void loader(){
-        for(Menu menu : Menu.values()) {
+    public static void loader() {
+        for (Menu menu : Menu.values()) {
             try {
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("/aqil/atomicbomber/FXML/" + menu.address));
                 menu.root = loader.load();
@@ -47,7 +47,7 @@ public enum Menu {
     }
 
     public Scene getScene() {
-        if(scene == null){
+        if (scene == null) {
             scene = new Scene(root);
         }
         return scene;

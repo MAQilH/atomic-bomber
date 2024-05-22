@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class TruckMoveAnimation extends Transition implements Serializable {
     private final Truck truck;
 
-    public TruckMoveAnimation(Truck truck){
+    public TruckMoveAnimation(Truck truck) {
         this.truck = truck;
         setCycleCount(-1);
         setCycleDuration(javafx.util.Duration.millis(5000));
@@ -19,8 +19,8 @@ public class TruckMoveAnimation extends Transition implements Serializable {
     protected void interpolate(double v) {
         double x = truck.getX();
         x += truck.getSpeed();
-        if(x >= Game.WIDTH) x = -truck.getWidth();
-        else if(x < -truck.getWidth()) x = Game.WIDTH;
+        if (x >= Game.WIDTH) x = -truck.getWidth();
+        else if (x < -truck.getWidth()) x = Game.WIDTH;
         truck.setX(x);
     }
 }

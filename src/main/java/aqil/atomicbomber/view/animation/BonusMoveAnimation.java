@@ -12,7 +12,8 @@ public class BonusMoveAnimation extends Transition implements Serializable {
     private final double DURATION = 5000;
 
     private final double orgX;
-    public BonusMoveAnimation(Bonus bonus){
+
+    public BonusMoveAnimation(Bonus bonus) {
         this.bonus = bonus;
         orgX = bonus.getX();
 
@@ -25,18 +26,18 @@ public class BonusMoveAnimation extends Transition implements Serializable {
         Warplane warplane = bonus.getGame().getWarplane();
 
         double y = bonus.getY() - bonus.getSpeed();
-        double x = orgX + Math.sin(y/10)*50;
+        double x = orgX + Math.sin(y / 10) * 50;
 
-        bonus.setRotate(bonus.getRotate() + Math.sin(y/10)/2);
+        bonus.setRotate(bonus.getRotate() + Math.sin(y / 10) / 2);
 
         bonus.setX(x);
         bonus.setY(y);
 
-        if(bonus.getBoundsInParent().intersects(warplane.getBoundsInParent())){
+        if (bonus.getBoundsInParent().intersects(warplane.getBoundsInParent())) {
             stop();
             bonus.gain();
             bonus.remove();
-        } else if(y < -Bonus.HEIGHT){
+        } else if (y < -Bonus.HEIGHT) {
             stop();
             bonus.remove();
         }

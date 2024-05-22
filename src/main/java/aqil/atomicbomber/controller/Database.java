@@ -58,7 +58,7 @@ public class Database {
         }
     }
 
-    public User getUserWithId(int id){
+    public User getUserWithId(int id) {
         String sql = "SELECT * FROM USER WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -93,7 +93,7 @@ public class Database {
         }
     }
 
-    public User updateUserUsername(int id, String newUsername){
+    public User updateUserUsername(int id, String newUsername) {
         String sql = "UPDATE USER SET username = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
@@ -110,7 +110,7 @@ public class Database {
         }
     }
 
-    public User updateUserPassword(int id, String newPassword){
+    public User updateUserPassword(int id, String newPassword) {
         String sql = "UPDATE USER SET password = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, newPassword);
@@ -126,7 +126,7 @@ public class Database {
         }
     }
 
-    public void deleteUserFromUserTable(int id){
+    public void deleteUserFromUserTable(int id) {
         String sql = "DELETE FROM USER WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -137,7 +137,7 @@ public class Database {
         }
     }
 
-    public void deleteUserFromGameResultTable(int id){
+    public void deleteUserFromGameResultTable(int id) {
         String sql = "DELETE FROM GAME_RESULT WHERE user_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -148,12 +148,12 @@ public class Database {
         }
     }
 
-    public void deleteUser(int id){
+    public void deleteUser(int id) {
         deleteUserFromUserTable(id);
         deleteUserFromGameResultTable(id);
     }
 
-    public void saveGameResult(GameResult gameResult){
+    public void saveGameResult(GameResult gameResult) {
         String sql = "INSERT INTO GAME_RESULT (user_id, wave, kills, hardness, accurate) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
@@ -171,8 +171,8 @@ public class Database {
         }
     }
 
-    public ArrayList<GameResult> loadGameResultWithColumn(String column, int numberOfLoad){
-        String sql = "SELECT * FROM GAME_RESULT ORDER BY " + column +  " DESC LIMIT ?";
+    public ArrayList<GameResult> loadGameResultWithColumn(String column, int numberOfLoad) {
+        String sql = "SELECT * FROM GAME_RESULT ORDER BY " + column + " DESC LIMIT ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, numberOfLoad);
             pstmt.executeQuery();

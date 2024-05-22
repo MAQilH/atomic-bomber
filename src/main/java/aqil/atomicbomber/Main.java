@@ -11,34 +11,19 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
+        stage.initStyle(StageStyle.TRANSPARENT);
         Menu.loader();
         App.getInstance().setStage(stage);
         MenuLoader.setMenu(Menu.LOGIN_MENU);
         initializeStage(stage);
         stage.show();
-//        GameLauncher gameLauncher = new GameLauncher();
-//        App.getInstance().setGameLauncher(gameLauncher);
-//        App.getInstance().setStage(stage);
-//        gameLauncher.start(stage);
-//
-//        Database database = Database.getInstance();
-//
-//        User user = new User(0, "aqil", "1234");
-//        System.out.println(database.getUserWithUsername("aqil").getId());
-//
-//        URL url = HelloMenu.class.getResource("/FXML/Hello.fxml");
-//        URL url = Main.class.getResource("/aqil/atomicbomber/FXML/pause-menu.fxml");
-//        Menu.loader();
-//        Pane pane = Menu.PAUSE_MENU.getRoot();
-//        Scene scene = new Scene(pane);
-
     }
 
     public void initializeStage(Stage stage){
@@ -46,8 +31,6 @@ public class Main extends Application {
         stage.getIcons().add(image);
         stage.setTitle("Atomic Bomber");
     }
-
-
 
     public static void main(String[] args) {
         launch();

@@ -7,7 +7,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 public class AvatarController {
-    public Image chooseImage(){
+    public Image chooseImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
         fileChooser.getExtensionFilters().addAll(

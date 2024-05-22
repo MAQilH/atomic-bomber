@@ -10,21 +10,21 @@ public enum Sounds {
 
     final Media sound;
 
-    Sounds(String audioName){
+    Sounds(String audioName) {
         String audioFilePath = "/Audios/" + audioName;
         sound = new Media(getClass().getResource(audioFilePath).toExternalForm());
     }
 
-    public void play(){
-        if(!App.getInstance().getSetting().isMuted()){
+    public void play() {
+        if (!App.getInstance().getSetting().isMuted()) {
             MediaPlayer mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
 
             ChangeListener<Boolean> listener = (observable, oldValue, newValue) -> {
-                if(newValue){
+                if (newValue) {
                     mediaPlayer.stop();
-                }else{
+                } else {
                     mediaPlayer.play();
                 }
             };

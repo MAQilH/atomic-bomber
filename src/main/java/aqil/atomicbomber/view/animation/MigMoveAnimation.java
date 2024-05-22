@@ -10,7 +10,7 @@ public class MigMoveAnimation extends Transition {
     private final Mig mig;
     private final int DURATION = 5000;
 
-    public MigMoveAnimation(Mig mig){
+    public MigMoveAnimation(Mig mig) {
         this.mig = mig;
         setCycleCount(-1);
         setCycleDuration(Duration.millis(DURATION));
@@ -20,8 +20,10 @@ public class MigMoveAnimation extends Transition {
     protected void interpolate(double v) {
         double x = mig.getX() + mig.getSpeed();
         mig.setX(x);
-        if(x < -mig.getWidth() || x > Game.WIDTH)
+        if (x < -mig.getWidth() || x > Game.WIDTH){
+            mig.explosion();
             stop();
+        }
         mig.bang();
     }
 }

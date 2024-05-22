@@ -6,13 +6,13 @@ import aqil.atomicbomber.view.GameLauncher;
 
 public class MainController {
 
-    public void startNewGame(){
+    public void startNewGame() {
         GameLauncher gameLauncher = new GameLauncher();
         App.getInstance().setGameLauncher(gameLauncher);
         gameLauncher.start();
     }
 
-    public void reloadGame(){
+    public void reloadGame() {
         GameLauncher gameLauncher = new GameLauncher();
         App.getInstance().setGameLauncher(gameLauncher);
         gameLauncher.reloadGame();

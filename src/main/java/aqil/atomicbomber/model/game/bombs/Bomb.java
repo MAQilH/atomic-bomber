@@ -19,7 +19,8 @@ public abstract class Bomb extends Rectangle implements Serializable {
     private final String bombImageAddress;
     private final int numberOfFrame;
     private boolean destroyObstacle = false;
-    Bomb(double WIDTH, double HEIGHT, double radius, Game game, String bombImageAddress, int numberOfFrame){
+
+    Bomb(double WIDTH, double HEIGHT, double radius, Game game, String bombImageAddress, int numberOfFrame) {
         super(WIDTH, HEIGHT);
         this.radius = radius;
         this.game = game;
@@ -27,24 +28,24 @@ public abstract class Bomb extends Rectangle implements Serializable {
         this.numberOfFrame = numberOfFrame;
     }
 
-    private void initialize(Warplane warplane){
-        speed = warplane.getSpeed()/2;
+    private void initialize(Warplane warplane) {
+        speed = warplane.getSpeed() / 2;
         this.setX(warplane.getX() + warplane.getWidth() / 2 - this.getWidth() / 2);
         this.setY(warplane.getY() + warplane.getWidth() / 2 - this.getWidth() / 2);
         double rotate = warplane.getRotate();
-        if(rotate > 270) rotate = 0;
-        else if(rotate > 180) rotate = 180;
+        if (rotate > 270) rotate = 0;
+        else if (rotate > 180) rotate = 180;
         this.setRotate(rotate);
     }
 
-    public void start(){
+    public void start() {
         game.setNumberOfPuttedBombs(game.getNumberOfPuttedBombs() + 1);
         initialize(game.getWarplane());
         game.addBomb(this);
         startMove();
     }
 
-    private void startMove(){
+    private void startMove() {
         BombMoveAnimation bombMoveAnimation = new BombMoveAnimation(this);
         game.addAnimation(bombMoveAnimation);
         bombMoveAnimation.play();
@@ -54,7 +55,7 @@ public abstract class Bomb extends Rectangle implements Serializable {
         }));
     }
 
-    public void explosion(){
+    public void explosion() {
         BombExplosionAnimation bombExplosionAnimation = new BombExplosionAnimation(this, bombImageAddress, numberOfFrame);
         game.addAnimation(bombExplosionAnimation);
         bombExplosionAnimation.play();
@@ -67,21 +68,21 @@ public abstract class Bomb extends Rectangle implements Serializable {
         }));
     }
 
-    public void remove(){
-        if(destroyObstacle)
+    public void remove() {
+        if (destroyObstacle)
             game.setNumberOfSuccessfulBombs(game.getNumberOfSuccessfulBombs() + 1);
         game.removeBomb(this);
     }
 
-    public double getSpeed(){
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed){
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
-    public double getAcceleration(){
+    public double getAcceleration() {
         return acceleration;
     }
 
@@ -89,10 +90,10 @@ public abstract class Bomb extends Rectangle implements Serializable {
         return radius;
     }
 
-    public void checkCollision(){
-        for(Node node: game.getObstacles().getChildren()){
+    public void checkCollision() {
+        for (Node node : game.getObstacles().getChildren()) {
             Obstacle obstacle = (Obstacle) node;
-            if(this.getBoundsInParent().intersects(obstacle.getBoundsInParent())){
+            if (this.getBoundsInParent().intersects(obstacle.getBoundsInParent())) {
                 obstacle.explosion();
                 destroyObstacle = true;
             }

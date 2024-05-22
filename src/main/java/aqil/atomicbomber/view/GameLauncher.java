@@ -46,15 +46,16 @@ public class GameLauncher {
         setMusic(MusicTrack.TRACK1);
 
     }
+
     public void setMusic(MusicTrack newMusicTrack) {
         stopMusic();
         App.getInstance().getSetting().setMusicTrack(newMusicTrack);
         App.getInstance().getSetting().getMusicTrack().play();
     }
 
-    public void stopMusic(){
+    public void stopMusic() {
         MusicTrack musicTrack = App.getInstance().getSetting().getMusicTrack();
-        if(musicTrack != null)
+        if (musicTrack != null)
             musicTrack.stop();
     }
 
@@ -69,7 +70,7 @@ public class GameLauncher {
 
             gameRoot.getChildren().add(game.getWarplane());
         } catch (Exception e) {
-            System.err.println ("Unable to reload game data");
+            System.err.println("Unable to reload game data");
             MenuLoader.setMenu(Menu.MAIN_MENU);
         }
 
@@ -91,7 +92,7 @@ public class GameLauncher {
         }
     }
 
-    private void showScene(){
+    private void showScene() {
         Stage stage = App.getInstance().getStage();
         stage.setScene(new Scene(root));
         stage.centerOnScreen();
@@ -102,7 +103,7 @@ public class GameLauncher {
     }
 
     private void blackAndWhite() {
-        if(App.getInstance().getSetting().isBlackAndWhite()){
+        if (App.getInstance().getSetting().isBlackAndWhite()) {
             ColorAdjust colorAdjust = new ColorAdjust();
             System.out.println("Black and white");
             colorAdjust.setSaturation(-1);
@@ -110,32 +111,32 @@ public class GameLauncher {
         }
     }
 
-    void initializeRoot(){
+    void initializeRoot() {
         setPaneSize(root);
         root.getChildren().add(gameRoot);
     }
 
-    void initializeGameRoot(){
+    void initializeGameRoot() {
         setPaneSize(gameRoot);
         setBackground();
         addView();
         addGameController();
     }
 
-    void addGameController(){
+    void addGameController() {
         actionController = new GameActionController(game, this);
         gameRoot.getChildren().add(actionController);
         actionController.setFocusTraversable(true);
     }
 
-    void setPaneSize(Pane pane){
+    void setPaneSize(Pane pane) {
         pane.setMinHeight(Game.HEIGHT);
         pane.setMaxHeight(Game.HEIGHT);
         pane.setMinWidth(Game.WIDTH);
         pane.setMaxWidth(Game.WIDTH);
     }
 
-    void setBackground(){
+    void setBackground() {
         Image image = new Image(GameLauncher.class.getResource("/Images/game-background2.jpg").toExternalForm(), Game.WIDTH, Game.HEIGHT, false, false);
         BackgroundImage backgroundImage = new BackgroundImage(
                 image,
@@ -143,17 +144,17 @@ public class GameLauncher {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT
-                );
+        );
         gameRoot.setBackground(new Background(backgroundImage));
     }
 
-    void addView(){
+    void addView() {
         GameViewBuilder gameViewBuilder = new GameViewBuilder(gameRoot, game);
         gameViewBuilder.start();
     }
 
-    void initializeGameObject(int wave){
-        if(wave == 1){
+    void initializeGameObject(int wave) {
+        if (wave == 1) {
             gameRoot.getChildren().add(game.getBullets());
             gameRoot.getChildren().add(game.getObstacles());
             addWarplane();
@@ -170,17 +171,17 @@ public class GameLauncher {
         initMig(wave);
     }
 
-    void addWarplane(){
+    void addWarplane() {
         game.setWarplane(new Warplane(game));
 
         game.getWarplane().currentHpProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue.doubleValue() <= 0){
+            if (newValue.doubleValue() <= 0) {
                 endGame(false);
             }
         });
     }
 
-    void initTank(int wave){
+    void initTank(int wave) {
         int tankNumber = 2 + wave;
         for (int tankIndex = 0; tankIndex < tankNumber; tankIndex++) {
             Tank tank = new Tank(game, App.getInstance().getSetting().getDifficulty());
@@ -188,7 +189,7 @@ public class GameLauncher {
         }
     }
 
-    void initTrees(int wave){
+    void initTrees(int wave) {
         int treeNumber = 3 + wave;
         for (int treeIndex = 0; treeIndex < treeNumber; treeIndex++) {
             Tree tree = new Tree(game);
@@ -196,7 +197,7 @@ public class GameLauncher {
         }
     }
 
-    void initBuilding(int wave){
+    void initBuilding(int wave) {
         int treeNumber = 1 + wave;
         for (int buildingIndex = 0; buildingIndex < treeNumber; buildingIndex++) {
             Building building = new Building(game);
@@ -204,7 +205,7 @@ public class GameLauncher {
         }
     }
 
-    void initTrench(int wave){
+    void initTrench(int wave) {
         int trenchNumber = 1 + wave;
         for (int trenchIndex = 0; trenchIndex < trenchNumber; trenchIndex++) {
             Trench trench = new Trench(game);
@@ -212,7 +213,7 @@ public class GameLauncher {
         }
     }
 
-    void initTruck(int wave){
+    void initTruck(int wave) {
         int truckNumber = 1 + wave;
         for (int truckIndex = 0; truckIndex < truckNumber; truckIndex++) {
             Truck truck = new Truck(game);
@@ -220,19 +221,19 @@ public class GameLauncher {
         }
     }
 
-    void initMig(int wave){
-        if(wave == Game.WAVE_NUMBER){
+    void initMig(int wave) {
+        if (wave == Game.WAVE_NUMBER) {
             Mig mig = new Mig(game, App.getInstance().getSetting().getDifficulty());
             mig.start();
 
         }
     }
 
-    public void freezeGame(){
-        if(game.getFreezePercentage() < 100) return;
+    public void freezeGame() {
+        if (game.getFreezePercentage() < 100) return;
         game.setFreezePercentage(0);
 
-        for(Node node: game.getObstacles().getChildren()){
+        for (Node node : game.getObstacles().getChildren()) {
             Obstacle obstacle = (Obstacle) node;
             obstacle.pause();
             obstacle.setOpacity(0.5);
@@ -241,7 +242,7 @@ public class GameLauncher {
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
-                for(Node node: game.getObstacles().getChildren()){
+                for (Node node : game.getObstacles().getChildren()) {
                     Obstacle obstacle = (Obstacle) node;
                     obstacle.resume();
                     obstacle.setOpacity(1);
@@ -255,10 +256,10 @@ public class GameLauncher {
     public void pauseGame(Node node) {
         blurScene();
 
-        for(Transition transition: game.getAnimations()){
+        for (Transition transition : game.getAnimations()) {
             transition.pause();
         }
-        for(Timeline timeline: game.getTimelines()){
+        for (Timeline timeline : game.getTimelines()) {
             timeline.pause();
         }
         actionController.setDisable(true);
@@ -269,10 +270,10 @@ public class GameLauncher {
     }
 
     public void resumeGame(Node node) {
-        for(Transition transition: game.getAnimations()){
+        for (Transition transition : game.getAnimations()) {
             transition.play();
         }
-        for(Timeline timeline: game.getTimelines()){
+        for (Timeline timeline : game.getTimelines()) {
             timeline.play();
         }
         actionController.setDisable(false);
@@ -282,7 +283,7 @@ public class GameLauncher {
         unBlurScene();
     }
 
-    public void blurScene(){
+    public void blurScene() {
         GaussianBlur blur = new GaussianBlur(0);
         gameRoot.setEffect(blur);
 
@@ -293,7 +294,7 @@ public class GameLauncher {
         timeline.play();
     }
 
-    public void unBlurScene(){
+    public void unBlurScene() {
         GaussianBlur blur = new GaussianBlur(0);
         gameRoot.setEffect(blur);
 
@@ -311,7 +312,7 @@ public class GameLauncher {
         }
         game.setAccurate();
         int waveNumber = game.getWaveNumber();
-        if(waveNumber == Game.WAVE_NUMBER){
+        if (waveNumber == Game.WAVE_NUMBER) {
             endGame(true);
             return;
         }
@@ -320,15 +321,15 @@ public class GameLauncher {
         initializeGameObject(waveNumber);
     }
 
-    public void endGame(boolean win){
+    public void endGame(boolean win) {
         stopMusic();
         GameResult gameResult = new GameResult(
                 App.getInstance().getUser().getId(),
-                win ? Game.WAVE_NUMBER: game.getWaveNumber() - 1,
+                win ? Game.WAVE_NUMBER : game.getWaveNumber() - 1,
                 game.getKillingNumber(),
                 App.getInstance().getSetting().getDifficulty().getValue() * game.getKillingNumber(),
                 game.getAccurate()
-                );
+        );
         ((GameResultMenuController) Menu.GAME_RESULT_MENU.getMenuController()).updateMenu(gameResult);
         pauseGame(Menu.GAME_RESULT_MENU.getRoot());
     }
@@ -350,8 +351,8 @@ public class GameLauncher {
         game.getWarplane().setCurrentHp(Warplane.MAX_HP);
     }
 
-    public void checkWaveEnded(){
-        if(game.getObstacles().getChildren().isEmpty()){
+    public void checkWaveEnded() {
+        if (game.getObstacles().getChildren().isEmpty()) {
             nextWave();
         }
     }

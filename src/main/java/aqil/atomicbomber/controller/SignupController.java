@@ -6,7 +6,7 @@ import aqil.atomicbomber.utils.FileSaver;
 
 public class SignupController {
 
-    public void signupUser(String username, String password, String avatarUrl){
+    public void signupUser(String username, String password, String avatarUrl) {
         Database database = Database.getInstance();
         User user = database.saveUser(username, password);
         FileSaver.saveUserAvatar(user, avatarUrl);

@@ -40,7 +40,7 @@ public class GameResultMenuController extends MenuController implements Initiali
     public void updateMenu(GameResult gameResult) {
         this.gameResult = gameResult;
 
-        if(gameResult.getWave() == Game.WAVE_NUMBER){
+        if (gameResult.getWave() == Game.WAVE_NUMBER) {
             game_status_lbl.setText("WIN");
             game_status_lbl.getStyleClass().remove("lose_lbl");
             game_status_lbl.getStyleClass().add("win_lbl");

@@ -9,6 +9,7 @@ import javafx.scene.shape.Rectangle;
 public class Building extends Obstacle {
 
     public static final int HEIGHT = 120, WIDTH = 100;
+
     public Building(Game game) {
         super(WIDTH, HEIGHT, "building.png", game, 1, 0);
     }

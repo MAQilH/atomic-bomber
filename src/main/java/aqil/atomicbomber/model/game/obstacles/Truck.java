@@ -23,7 +23,7 @@ public class Truck extends Obstacle {
         game.addObstacle(this);
 
         speed += Random.randomDouble(-0.5, 0.5);
-        if(Random.bern(0.5)){
+        if (Random.bern(0.5)) {
             speed = -speed;
             setScaleX(-1);
         }
@@ -38,7 +38,8 @@ public class Truck extends Obstacle {
 
 
     TruckMoveAnimation truckMoveAnimation;
-    void startMove(){
+
+    void startMove() {
         truckMoveAnimation = new TruckMoveAnimation(this);
         truckMoveAnimation.play();
 

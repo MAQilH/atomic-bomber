@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ScoreController {
 
-    public ObservableList<GameRecord> getScoreDate(int number){
+    public ObservableList<GameRecord> getScoreDate(int number) {
         ArrayList<GameResult> results = Database.getInstance().loadGameResultWithColumn("hardness", 10);
         ObservableList<GameRecord> data = FXCollections.observableArrayList();
 
@@ -23,7 +23,7 @@ public class ScoreController {
                     gameResult.getHardness(),
                     gameResult.getAccurate(),
                     data.size() + 1,
-                    user == null? "Guest": user.getUsername()
+                    user == null ? "Guest" : user.getUsername()
             );
             data.add(record);
         }

@@ -13,11 +13,12 @@ public class App {
     private final Setting setting;
     private static App app = null;
 
-    private App(){
+    private App() {
         setting = new Setting();
     }
-    public synchronized static App getInstance(){
-        if(app == null)
+
+    public synchronized static App getInstance() {
+        if (app == null)
             app = new App();
         return app;
     }

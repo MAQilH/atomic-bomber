@@ -26,7 +26,7 @@ public class User {
         return id;
     }
 
-    public Image getAvatar(){
+    public Image getAvatar() {
         return FileSaver.getUserAvatar(this);
     }
 }

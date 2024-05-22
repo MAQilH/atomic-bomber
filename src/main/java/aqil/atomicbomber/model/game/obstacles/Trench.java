@@ -6,6 +6,7 @@ import aqil.atomicbomber.utils.Random;
 
 public class Trench extends Obstacle {
     public static final int HEIGHT = 60, WIDTH = 70;
+
     public Trench(Game game) {
         super(WIDTH, HEIGHT, "trench.png", game, 2, 10);
     }

@@ -6,10 +6,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
 public class GameActionController extends Rectangle {
-    public GameActionController(Game game, GameLauncher gameLauncher){
+    public GameActionController(Game game, GameLauncher gameLauncher) {
         setOnKeyPressed((keyEvent -> {
             KeyCode code = keyEvent.getCode();
-            switch (code){
+            switch (code) {
                 case W:
                     game.getWarplane().rotateUp();
                     break;

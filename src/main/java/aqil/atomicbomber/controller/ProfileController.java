@@ -6,7 +6,7 @@ import aqil.atomicbomber.utils.FileSaver;
 import javafx.scene.image.Image;
 
 public class ProfileController {
-    public void saveUser(String newUsername, String newPassword, Image newAvatarImage){
+    public void saveUser(String newUsername, String newPassword, Image newAvatarImage) {
         Database database = Database.getInstance();
         if (!newUsername.isEmpty()) {
             User user = database.updateUserUsername(App.getInstance().getUser().getId(), newUsername);

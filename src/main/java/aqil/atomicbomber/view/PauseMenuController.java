@@ -46,6 +46,7 @@ public class PauseMenuController extends MenuController implements Initializable
         exit_btn.setOnMouseClicked(e -> onExit());
         save_and_exit_btn.setOnMouseClicked(e -> onSave());
         volume_btn.setOnMouseClicked(e -> onVolume());
+        resume_btn.setOnMouseClicked(e -> pauseController.resumeGame());
 
         initializeMusicMenu();
     }
@@ -65,7 +66,7 @@ public class PauseMenuController extends MenuController implements Initializable
     }
 
     private void onSave() {
-        pauseController.saveGame();
+        pauseController.exitGame();
     }
 
     private void onExit() {

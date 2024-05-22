@@ -5,12 +5,12 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class Setting {
     private Difficulty difficulty;
-    private BooleanProperty isMuted;
+    private final BooleanProperty isMuted;
     private boolean isBlackAndWhite;
     private MusicTrack musicTrack;
 
-    public Setting(){
-        isMuted = new SimpleBooleanProperty(this, "mute", true);
+    public Setting() {
+        isMuted = new SimpleBooleanProperty(this, "mute", false);
         isBlackAndWhite = false;
         difficulty = Difficulty.EASY;
     }

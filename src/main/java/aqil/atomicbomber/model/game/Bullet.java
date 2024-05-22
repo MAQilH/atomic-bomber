@@ -21,7 +21,7 @@ public class Bullet extends Rectangle {
 
     private double radius = 30;
 
-    public Bullet(Game game, Fighter fighter){
+    public Bullet(Game game, Fighter fighter) {
         super(WIDTH, HEIGHT);
         this.game = game;
         this.fighter = fighter;
@@ -29,7 +29,7 @@ public class Bullet extends Rectangle {
         setFill(new ImagePattern(new Image(Objects.requireNonNull(Warplane.class.getResource("/Images/bullet.png")).toExternalForm())));
     }
 
-    public void start(){
+    public void start() {
         Pair<Double, Double> tankPosition = fighter.getCenterCoordinate();
         setX(tankPosition.getKey() - (double) WIDTH / 2);
         setY(tankPosition.getValue() - (double) HEIGHT / 2);
@@ -39,7 +39,8 @@ public class Bullet extends Rectangle {
     }
 
     BulletMoveAnimation bulletMoveAnimation;
-    private void startMove(){
+
+    private void startMove() {
         bulletMoveAnimation = new BulletMoveAnimation(this, game, fighter);
         bulletMoveAnimation.play();
         game.addAnimation(bulletMoveAnimation);
@@ -50,8 +51,9 @@ public class Bullet extends Rectangle {
     }
 
     BulletExplosionAnimation bulletExplosionAnimation;
-    public void explosion(){
-        if(isHit) return;
+
+    public void explosion() {
+        if (isHit) return;
         isHit = true;
         game.getWarplane().setCurrentHp(game.getWarplane().getCurrentHp() - 20);
         bulletExplosionAnimation = new BulletExplosionAnimation();
@@ -65,17 +67,17 @@ public class Bullet extends Rectangle {
         remove();
     }
 
-    public void remove(){
+    public void remove() {
         game.removeAnimation(bulletExplosionAnimation);
         game.removeAnimation(bulletMoveAnimation);
         game.removeBullet(this);
     }
 
-    public Pair<Double, Double> getCenterCoordinate(){
+    public Pair<Double, Double> getCenterCoordinate() {
         return new Pair<>(getX() + getWidth() / 2, getY() + getHeight() / 2);
     }
 
-    public double getDistFromWarplane(){
+    public double getDistFromWarplane() {
         Pair<Double, Double> warplanePosition = game.getWarplane().getCenterCoordinate();
         Pair<Double, Double> bulletPosition = getCenterCoordinate();
         return Math.sqrt(Math.pow(warplanePosition.getKey() - bulletPosition.getKey(), 2) + Math.pow(warplanePosition.getValue() - bulletPosition.getValue(), 2));

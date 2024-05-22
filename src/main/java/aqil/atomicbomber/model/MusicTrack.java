@@ -10,22 +10,23 @@ public enum MusicTrack {
     TRACK3("reimagined.mp3");
     final Media sound;
 
-    MusicTrack(String audioName){
+    MusicTrack(String audioName) {
         String audioFilePath = "/Audios/" + audioName;
         sound = new Media(getClass().getResource(audioFilePath).toExternalForm());
     }
 
     private MediaPlayer mediaPlayer = null;
-    public void play(){
-        if(!App.getInstance().getSetting().isMuted()){
+
+    public void play() {
+        if (!App.getInstance().getSetting().isMuted()) {
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.setCycleCount(-1);
             mediaPlayer.play();
 
             ChangeListener<Boolean> listener = (observable, oldValue, newValue) -> {
-                if(newValue){
+                if (newValue) {
                     mediaPlayer.pause();
-                }else{
+                } else {
                     mediaPlayer.play();
                 }
             };
@@ -37,8 +38,8 @@ public enum MusicTrack {
         }
     }
 
-    public void stop(){
-        if(mediaPlayer != null)
+    public void stop() {
+        if (mediaPlayer != null)
             mediaPlayer.stop();
     }
 }

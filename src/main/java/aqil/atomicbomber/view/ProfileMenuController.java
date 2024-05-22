@@ -21,7 +21,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ProfileMenuController extends MenuController implements Initializable {
-
     public ImageView avatar_btn;
     public TextField username_field;
     public Label username_field_error;

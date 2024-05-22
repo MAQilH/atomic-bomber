@@ -9,7 +9,8 @@ import javafx.util.Pair;
 
 public class Tank extends Fighter {
     public static double HEIGHT = 60, WIDTH = 90;
-    public Tank(Game game, Difficulty difficulty){
+
+    public Tank(Game game, Difficulty difficulty) {
         super(WIDTH, HEIGHT, "tank.png", game, 6, 25, difficulty);
     }
 
@@ -20,7 +21,7 @@ public class Tank extends Fighter {
         game.addObstacle(this);
 
         speed += Random.randomDouble(-0.7, 0.7);
-        if(Random.bern(0.5)){
+        if (Random.bern(0.5)) {
             speed = -speed;
             setScaleX(-1);
         }
@@ -29,7 +30,8 @@ public class Tank extends Fighter {
 
 
     TankMoveAnimation tankMoveAnimation;
-    void startMove(){
+
+    void startMove() {
         tankMoveAnimation = new TankMoveAnimation(this);
         tankMoveAnimation.play();
         game.addAnimation(tankMoveAnimation);
@@ -53,6 +55,6 @@ public class Tank extends Fighter {
 
     @Override
     public boolean checkInRadios(double theta) {
-        return theta < Math.PI/3 && theta > Math.PI/6;
+        return theta < Math.PI / 3 && theta > Math.PI / 6;
     }
 }

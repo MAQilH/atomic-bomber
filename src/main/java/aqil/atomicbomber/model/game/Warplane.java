@@ -36,7 +36,7 @@ public class Warplane extends Rectangle implements Serializable {
     private double speed = 4;
     private final Game game;
 
-    public Warplane(Game game){
+    public Warplane(Game game) {
         super(WIDTH, HEIGHT);
         this.game = game;
         currentHp = new SimpleDoubleProperty(this, "currentHp", MAX_HP);
@@ -46,19 +46,21 @@ public class Warplane extends Rectangle implements Serializable {
         initializeRotate();
     }
 
-    private void initializeView(){
+    private void initializeView() {
         setFill(new ImagePattern(new Image(Warplane.class.getResource("/Images/warplane.png").toExternalForm())));
-        setY((double) (Game.HEIGHT - Game.GROUND) /4 + (double) HEIGHT /2);
+        setY((double) (Game.HEIGHT - Game.GROUND) / 4 + (double) HEIGHT / 2);
     }
 
     private RotateTransition rotateTransition;
-    void initializeRotate(){
+
+    void initializeRotate() {
         Duration duration = Duration.millis(ROTATE_DURATION);
         rotateTransition = new RotateTransition(duration, this);
     }
 
     private WarplaneMoveAnimation warplaneMoveAnimation;
-    void initializeMove(){
+
+    void initializeMove() {
         warplaneMoveAnimation = new WarplaneMoveAnimation(this);
         game.addAnimation(warplaneMoveAnimation);
         warplaneMoveAnimation.play();
@@ -67,19 +69,21 @@ public class Warplane extends Rectangle implements Serializable {
             game.removeAnimation(warplaneMoveAnimation);
         }));
     }
-    public void dropNormalBomb(){
+
+    public void dropNormalBomb() {
         Bomb bomb = new NormalBomb(game);
         bomb.start();
     }
 
-    public void dropClusterBomb(){
-        if(game.getNumberOfClusterBombs() > 0)
+    public void dropClusterBomb() {
+        if (game.getNumberOfClusterBombs() > 0)
             game.setNumberOfClusterBombs(game.getNumberOfClusterBombs() - 1);
         else return;
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             int counter = 0;
+
             public void run() {
                 Platform.runLater(() -> {
                     Bomb bomb = new ClusterBomb(game);
@@ -96,8 +100,8 @@ public class Warplane extends Rectangle implements Serializable {
         timer.schedule(task, 0, 500);
     }
 
-    public void dropNuclearBomb(){
-        if(game.getNumberOfNuclearBombs() > 0)
+    public void dropNuclearBomb() {
+        if (game.getNumberOfNuclearBombs() > 0)
             game.setNumberOfNuclearBombs(game.getNumberOfNuclearBombs() - 1);
         else return;
 
@@ -105,38 +109,38 @@ public class Warplane extends Rectangle implements Serializable {
         bomb.start();
     }
 
-    public void rotateUp(){
+    public void rotateUp() {
         double rotateValue = -ROTATE_RATE;
 
         rotateTransition.setByAngle(rotateValue);
-        if(getRotate() >= 360){
+        if (getRotate() >= 360) {
             setRotate(getRotate() - 360);
         }
-        if(getRotate() <= 0){
+        if (getRotate() <= 0) {
             setRotate(getRotate() + 360);
         }
         rotateTransition.play();
     }
 
-    public void rotateDown(){
+    public void rotateDown() {
         double rotateValue = ROTATE_RATE;
 
         rotateTransition.setByAngle(rotateValue);
-        if(getRotate() >= 360){
+        if (getRotate() >= 360) {
             setRotate(getRotate() - 360);
         }
-        if(getRotate() <= 0){
+        if (getRotate() <= 0) {
             setRotate(getRotate() + 360);
         }
         rotateTransition.play();
     }
 
-    public void increaseSpeed(){
-        speed = Math.min(SPEED_RATE*20, speed + SPEED_RATE);
+    public void increaseSpeed() {
+        speed = Math.min(SPEED_RATE * 20, speed + SPEED_RATE);
     }
 
-    public void decreaseSpeed(){
-        speed = Math.max(SPEED_RATE*4, speed - SPEED_RATE);
+    public void decreaseSpeed() {
+        speed = Math.max(SPEED_RATE * 4, speed - SPEED_RATE);
     }
 
     public double getSpeed() {
@@ -151,11 +155,11 @@ public class Warplane extends Rectangle implements Serializable {
         return currentHp.get();
     }
 
-    public DoubleProperty currentHpProperty(){
+    public DoubleProperty currentHpProperty() {
         return currentHp;
     }
 
-    public Pair<Double, Double> getCenterCoordinate(){
-        return new Pair<Double, Double>(getX() + WIDTH/3.5, getY() + HEIGHT/2.);
+    public Pair<Double, Double> getCenterCoordinate() {
+        return new Pair<Double, Double>(getX() + WIDTH / 3.5, getY() + HEIGHT / 2.);
     }
 }

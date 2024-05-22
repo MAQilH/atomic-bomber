@@ -4,7 +4,7 @@ import javafx.animation.Transition;
 
 public class BulletExplosionAnimation extends Transition {
 
-    public BulletExplosionAnimation(){
+    public BulletExplosionAnimation() {
         setCycleCount(1);
         setCycleDuration(javafx.util.Duration.millis(1000));
     }

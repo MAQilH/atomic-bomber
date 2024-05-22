@@ -35,7 +35,8 @@ public class Game implements Serializable {
     private IntegerProperty numberOfClusterBombs;
     private IntegerProperty freezePercentage;
     private IntegerProperty waveNumber;
-    public Game(){
+
+    public Game() {
         accurate = new SimpleDoubleProperty(this, "accurate", 1);
         killingNumber = new SimpleIntegerProperty(this, "killingNumber", 0);
         numberOfNuclearBombs = new SimpleIntegerProperty(this, "numberOfNuclearBombs", 0);
@@ -44,6 +45,7 @@ public class Game implements Serializable {
         waveNumber = new SimpleIntegerProperty(this, "waveNumber", 1);
 
     }
+
     public int getNumberOfPuttedBombs() {
         return numberOfPuttedBombs;
     }
@@ -60,50 +62,51 @@ public class Game implements Serializable {
         this.numberOfSuccessfulBombs = numberOfSuccessfulBombs;
     }
 
-    public void addAnimation(Transition animation){
+    public void addAnimation(Transition animation) {
         animations.add(animation);
     }
 
-    public void removeAnimation(Transition animation){
+    public void removeAnimation(Transition animation) {
         animations.remove(animation);
     }
 
-    public void addTimeline(Timeline timeline){
+    public void addTimeline(Timeline timeline) {
         timelines.add(timeline);
     }
 
-    public void removeTimeline(Timeline timeline){
+    public void removeTimeline(Timeline timeline) {
         timelines.remove(timeline);
     }
 
-    public void addBullet(Bullet bullet){
+    public void addBullet(Bullet bullet) {
         bullets.getChildren().add(bullet);
     }
 
-    public void removeBullet(Bullet bullet){
+    public void removeBullet(Bullet bullet) {
         bullets.getChildren().remove(bullet);
     }
-    public void addBomb(Bomb bomb){
+
+    public void addBomb(Bomb bomb) {
         bombs.getChildren().add(bomb);
     }
 
-    public void removeBomb(Bomb bomb){
+    public void removeBomb(Bomb bomb) {
         bombs.getChildren().remove(bomb);
     }
 
-    public void addObstacle(Obstacle obstacle){
+    public void addObstacle(Obstacle obstacle) {
         obstacles.getChildren().add(obstacle);
     }
 
-    public void removeObstacle(Obstacle obstacle){
+    public void removeObstacle(Obstacle obstacle) {
         obstacles.getChildren().remove(obstacle);
     }
 
-    public void addBonus(Bonus bonus){
+    public void addBonus(Bonus bonus) {
         bonuses.getChildren().add(bonus);
     }
 
-    public void removeBonus(Bonus bonus){
+    public void removeBonus(Bonus bonus) {
         bonuses.getChildren().remove(bonus);
     }
 
@@ -120,7 +123,7 @@ public class Game implements Serializable {
     }
 
     public void setAccurate() {
-        this.accurate.set((double) numberOfSuccessfulBombs/numberOfPuttedBombs);
+        this.accurate.set((double) numberOfSuccessfulBombs / numberOfPuttedBombs);
     }
 
     public int getKillingNumber() {
@@ -131,7 +134,7 @@ public class Game implements Serializable {
         this.killingNumber.set(killingNumber);
     }
 
-    public Group getObstacles(){
+    public Group getObstacles() {
         return obstacles;
     }
 
@@ -163,7 +166,7 @@ public class Game implements Serializable {
         return animations;
     }
 
-    public ArrayList<Timeline> getTimelines(){
+    public ArrayList<Timeline> getTimelines() {
         return timelines;
     }
 
@@ -171,7 +174,7 @@ public class Game implements Serializable {
         return waveNumber.get();
     }
 
-    public void setWaveNumber(int waveNumber){
+    public void setWaveNumber(int waveNumber) {
         this.waveNumber.set(waveNumber);
     }
 
